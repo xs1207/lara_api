@@ -45,7 +45,7 @@ class IndexController extends Controller
             if($token==$http_token){
                 $response=[
                     'error'=>0,
-                    'msg'=>'ok'
+                    'msg'=>'is ok'
                 ];
             }else{
                 $response=[
