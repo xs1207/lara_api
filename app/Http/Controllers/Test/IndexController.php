@@ -113,8 +113,8 @@ class IndexController extends Controller
             'pwd'=>$pwd
         ];
         //print_r($data);exit;
-        $url = 'http://passport.shop.com/api/login';
-        //$url = 'http://dpassprot.tactshan.com/api/login';
+//        $url = 'http://passport.shop.com/api/login';
+        $url = 'http://dpassprot.tactshan.com/api/login';
         $ch = curl_init($url);
         curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
         curl_setopt($ch,CURLOPT_POST,1);
