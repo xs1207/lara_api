@@ -16,5 +16,17 @@ $router->get('/', function () use ($router) {
 });
 
 
+//登录
 $router->get('/user/login','Test\IndexController@login');
+//用户中心
 $router->get('/user/center','Test\IndexController@uCenter');
+
+//防刷测试
+$router->get('/test/order','Test\IndexController@order');
+
+
+$router->get('/test/encryption','Test\IndexController@encryption');
+
+//api  接口登录测试
+$router->post('/user/login','Test\IndexController@lgn');
+

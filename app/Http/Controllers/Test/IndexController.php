@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Test;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-
-
 class IndexController extends Controller
 {
     protected $hash_token = 'str:h:token:';
@@ -61,4 +59,72 @@ class IndexController extends Controller
         }
         return $response;
     }
+
+    /**
+     * 防刷测试
+     */
+
+    public function order()
+    {
+        echo __METHOD__;
+        /*
+        if($num>20){         //非法请求
+            //拒绝服务十分钟
+            $response = [
+                'error'=>40003,
+                'msg'=>'Invalid Request!!!'
+            ];
+            Redis::sAdd('ip',$ip);
+            Redis::expire($redis_key,600);      //10s
+        }else{
+            $response=[
+                'error'=>0,
+                'msg'=>'ok',
+            ];
+        }
+        return $response;
+        */
+    }
+
+    public function encryption()
+    {
+//        print_r(openssl_get_cipher_methods());
+
+        $str = "Goods morning";
+        $key = "asdas";
+        $iv = mt_rand(1111111111111111,9999999999999999);       //初始化向量  固定字节  16位
+
+        //加密
+        $enc_str = openssl_encrypt($str,'AES-128-CBC',$key,OPENSSL_RAW_DATA,$iv);
+//        var_dump($enc_str);
+//        echo "<hr>";
+
+        //解密
+        $dec_str = openssl_decrypt($enc_str,'AES-128-CBC',$key,OPENSSL_RAW_DATA,$iv);
+        echo $dec_str;
+    }
+
+    public function lgn(Request $request)
+    {
+        $name=$request->input('name');
+        $pwd=$request->input('pwd');
+        $data=[
+            'name'=>$name,
+            'pwd'=>$pwd
+        ];
+        //$url = 'http://passport.shop.com/api/login';
+        $url = 'http://dpassprot.tactshan.com/api/login';
+        $ch = curl_init($url);
+        curl_setopt($ch,CURLOPT_HEADER,0);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+
+        $rs = curl_exec($ch);
+        curl_close($ch);
+        $response = json_decode($rs,true);
+        return $response;
+//        print_r($response);die;
+    }
+
 }
